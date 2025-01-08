@@ -1,5 +1,5 @@
 defaultProject: proj-nyc-taxi-pipeline
 defaultLocation: US
-defaultDataset: dataform
+defaultDataset: nyc_taxi_dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
