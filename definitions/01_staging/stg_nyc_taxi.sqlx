@@ -1,0 +1,30 @@
+config {
+    type: "table",
+    name: "stg_nyc_taxi"
+}
+
+js {
+
+    const {
+        START_DATE,
+        END_DATE
+    } = require("../../includes/variables.js");
+
+    dataform.START_DATE = START_DATE;
+    dataform.END_DATE = END_DATE;
+}
+
+SELECT
+  vendor_id,
+  pickup_datetime,
+  dropoff_datetime,
+  passenger_count,
+  trip_distance,
+  payment_type,
+  total_amount
+FROM
+  `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017`
+WHERE
+  pickup_datetime >= '${dataform.START_DATE}'
+  AND pickup_datetime < '${dataform.END_DATE}'
+  AND total_amount >= 0
