@@ -1,0 +1,20 @@
+
+config {
+  type: "assertion",
+  name: "test_positive_total_amount"
+}
+
+/*
+  Este test se considera “aprobado” si NO retorna filas.
+  Filas devueltas = FALLA
+
+  Se evalua que no existan registros con 
+  total_amount negativos
+*/
+
+SELECT
+  *
+FROM
+  ${ref("an_nyc_taxi")}
+WHERE
+  total_amount < 0
