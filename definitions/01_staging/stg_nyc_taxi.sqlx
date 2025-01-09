@@ -1,0 +1,22 @@
+-- definitions/01_staging/stg_nyc_taxi.sqlx
+
+config {
+  type: "table",  // Creamos una tabla en vez de vista
+  name: "stg_nyc_taxi"
+}
+
+-- Importamos variables de includes/variables.js
+DECLARE START_DATE STRING DEFAULT require("variables.js").START_DATE;
+DECLARE END_DATE STRING   DEFAULT require("variables.js").END_DATE;
+
+SELECT
+  vendor_id,
+  pickup_datetime,
+  dropoff_datetime,
+  passenger_count,
+  trip_distance,
+  payment_type,
+  total_amount
+FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017`
+WHERE pickup_datetime >= START_DATE
+  AND pickup_datetime < END_DATE
