@@ -5,8 +5,7 @@ config {
   name: "an_nyc_taxi"
 }
 
--- Usamos ref() para indicar dependencia al objeto stg_nyc_taxi.
--- Dataform se encargará de construir primero stg_nyc_taxi.
+
 SELECT
   vendor_id,
   EXTRACT(HOUR FROM pickup_datetime) as pickup_hour,
