@@ -1,19 +1,12 @@
-
 config {
   type: "table",
   schema: "nyc_taxi_dataform",
-  name: "an_nyc_taxi"
+  name: "an_nyc_taxi",
+  tags: ["prod-only"]
 }
 
 
 SELECT
-  vendor_id,
-  EXTRACT(HOUR FROM pickup_datetime) as pickup_hour,
-  passenger_count,
-  trip_distance,
-  payment_type,
-  total_amount,
-  -- Ejemplo: calculamos un costo promedio por milla
-  CASE WHEN trip_distance > 0 THEN total_amount / trip_distance ELSE 0 END as cost_per_mile
+  *
 FROM
   ${ref("stg_nyc_taxi")}

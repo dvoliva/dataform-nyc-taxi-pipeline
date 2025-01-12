@@ -22,13 +22,18 @@ js {
 }
 
 SELECT
+  data_file_year,
   vendor_id,
-  pickup_datetime,
-  dropoff_datetime,
+  EXTRACT(HOUR FROM pickup_datetime) as pickup_hour,
   passenger_count,
   trip_distance,
   payment_type,
-  total_amount
+  total_amount,
+  -- Calculamos el costo promedio por milla
+  CASE 
+    WHEN trip_distance > 0 THEN total_amount / trip_distance 
+    ELSE 0 
+  END as cost_per_mile
 FROM
   `${dataform.SOURCE_TABLE}`
 WHERE

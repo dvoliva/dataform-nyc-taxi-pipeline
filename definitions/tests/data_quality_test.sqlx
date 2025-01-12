@@ -14,7 +14,8 @@ config {
 
 SELECT
   *
-FROM
-  ${ref("an_nyc_taxi")}
+FROM 
+  ${ref("stg_nyc_taxi")}
+
 WHERE
   total_amount < 0
