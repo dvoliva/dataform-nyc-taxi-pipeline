@@ -6,7 +6,7 @@ config {
 js {
   const { START_DATE, END_DATE } = require("../../includes/variables.js");
 
-  // Determinar la tabla fuente según el entorno
+
   const env = dataform.projectConfig.ENVIRONMENT || "staging";
   let sourceTable = "";
 

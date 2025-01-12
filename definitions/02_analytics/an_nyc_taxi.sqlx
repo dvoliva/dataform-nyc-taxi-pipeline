@@ -5,8 +5,7 @@ config {
   tags: ["prod-only"]
 }
 
--- Usamos ref() para indicar dependencia al objeto stg_nyc_taxi.
--- Dataform se encargará de construir primero stg_nyc_taxi.
+
 SELECT
   *
 FROM
