@@ -12,7 +12,19 @@ js {
 
     dataform.START_DATE = START_DATE;
     dataform.END_DATE = END_DATE;
+
+  const env = process.env.ENVIRONMENT || "staging";
+  if (env == "prod") {
+    dataform.SOURCE_TABLE = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
+    dataform.START_DATE = "2017-01-01"; 
+    dataform.END_DATE = "2017-12-31";
+  } else {
+    dataform.SOURCE_TABLE = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
+    dataform.START_DATE = START_DATE;
+    dataform.END_DATE = END_DATE;
+  }
 }
+
 
 SELECT
   vendor_id,
