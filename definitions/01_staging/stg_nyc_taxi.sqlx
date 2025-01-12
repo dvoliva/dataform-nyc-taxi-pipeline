@@ -4,27 +4,21 @@ config {
 }
 
 js {
-
-    const {
-        START_DATE,
-        END_DATE
-    } = require("../../includes/variables.js");
-
-    dataform.START_DATE = START_DATE;
-    dataform.END_DATE = END_DATE;
+  const { START_DATE, END_DATE } = require("../../includes/variables.js");
 
   const env = process.env.ENVIRONMENT || "staging";
-  if (env == "prod") {
-    dataform.SOURCE_TABLE = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
-    dataform.START_DATE = "2017-01-01"; 
-    dataform.END_DATE = "2017-12-31";
-  } else {
-    dataform.SOURCE_TABLE = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
-    dataform.START_DATE = START_DATE;
-    dataform.END_DATE = END_DATE;
-  }
-}
+  let sourceTable = "";
 
+  if (env === "prod") {
+    sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
+  } else {
+    sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
+  }
+
+  dataform.SOURCE_TABLE = sourceTable;
+  dataform.START_DATE = START_DATE;
+  dataform.END_DATE = END_DATE;
+}
 
 SELECT
   vendor_id,
@@ -35,7 +29,7 @@ SELECT
   payment_type,
   total_amount
 FROM
-  `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017`
+  `${dataform.SOURCE_TABLE}`
 WHERE
   pickup_datetime >= '${dataform.START_DATE}'
   AND pickup_datetime < '${dataform.END_DATE}'
