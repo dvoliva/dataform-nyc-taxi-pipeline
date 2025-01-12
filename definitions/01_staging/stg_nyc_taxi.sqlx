@@ -1,12 +1,13 @@
 config {
-    type: "table",
-    name: "stg_nyc_taxi"
+  type: "table",
+  name: "stg_nyc_taxi"
 }
 
 js {
   const { START_DATE, END_DATE } = require("../../includes/variables.js");
 
-  const env = process.env.ENVIRONMENT || "staging";
+  // Determinar la tabla fuente según el entorno
+  const env = dataform.projectConfig.ENVIRONMENT || "staging";
   let sourceTable = "";
 
   if (env === "prod") {
