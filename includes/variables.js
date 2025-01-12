@@ -1,9 +1,9 @@
 // includes/variables.js
 
-// Detecta el entorno
-const ENVIRONMENT = process.env.ENVIRONMENT || "staging";
+// Detectar el entorno desde el archivo de configuración del proyecto
+const ENVIRONMENT = dataform.projectConfig.ENVIRONMENT || "staging";
 
-// Configuración de fechas por entorno
+// Configuración de fechas según el entorno
 const config = {
   staging: {
     START_DATE: "2016-01-01",
@@ -15,5 +15,6 @@ const config = {
   },
 };
 
-// Exporta las fechas correspondientes al entorno actual
+// Exportar las configuraciones del entorno actual
 module.exports = config[ENVIRONMENT];
+
