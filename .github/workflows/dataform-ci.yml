@@ -31,7 +31,7 @@ jobs:
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
         env:
-          GCLOUD_SERVICE_KEY: ${{ secrets.GCP_DF_SERVICE_KEY }}
+          GCP_DF_SERVICE_KEY: ${{ secrets.GCP_DF_SERVICE_KEY }}
 
       # Paso 5: Ejecutar pipeline en staging
       - name: Run Dataform in Staging
