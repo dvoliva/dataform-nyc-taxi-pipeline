@@ -14,5 +14,6 @@ const config = {
 };
 
 
-module.exports = config[ENVIRONMENT];
+module.exports = config[dataform.projectConfig.vars.ENVIRONMENT || "staging"];
+
 
