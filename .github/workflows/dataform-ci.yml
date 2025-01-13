@@ -25,32 +25,10 @@ jobs:
         run: npm install -g @dataform/cli
 
 
-
-
-      - name: Print raw secret
-        run: |
-          SERVICE_ACCOUNT_KEY=${{ secrets.GCP_DF_SERVICE_KEY }}
-          echo "$SERVICE_ACCOUNT_KEY"
-
-      - name: Authenticate with GCP
-        run: |
-          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | sed 's/\\n/\n/g' > key.json
-          cat key.json # Imprime el contenido del archivo key.json (opcional)
-          gcloud auth activate-service-account --key-file=key.json
-          gcloud config set project proj-nyc-taxi-pipeline
-          rm key.json
-
-
-
-
-
-
-
-
       # Paso 4: Autenticar con GCP
       - name: Authenticate with GCP
         run: |
-          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | tr -d '\r' | tr '\\n' '\n' > key.json
+          echo ${{ secrets.GCP_DF_SERVICE_KEY }} > key.json
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
         env:
