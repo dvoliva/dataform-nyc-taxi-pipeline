@@ -27,7 +27,7 @@ jobs:
 
 
 
-      - name: Debug: Print raw secret
+      - name: Print raw secret
         run: |
           SERVICE_ACCOUNT_KEY=${{ secrets.GCP_DF_SERVICE_KEY }}
           echo "$SERVICE_ACCOUNT_KEY"
