@@ -49,8 +49,9 @@ jobs:
         run: |
           ENVIRONMENT=prod dataform run
 
+      # Paso 7: Eliminar tabla staging
       - name: Clean Up Staging Table
-        if: success()  # Solo se ejecuta si la producción fue exitosa
+        if: success()  
         run: |
           bq rm -f -t proj-nyc-taxi-pipeline:nyc_taxi_dataform.stg_nyc_taxi
         env:
