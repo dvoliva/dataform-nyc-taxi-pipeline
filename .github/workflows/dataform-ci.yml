@@ -27,10 +27,15 @@ jobs:
 
 
 
+      - name: Debug: Print raw secret
+        run: |
+          SERVICE_ACCOUNT_KEY=${{ secrets.GCP_DF_SERVICE_KEY }}
+          echo "$SERVICE_ACCOUNT_KEY"
+
       - name: Authenticate with GCP
         run: |
           echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | sed 's/\\n/\n/g' > key.json
-          cat key.json # Imprime el contenido del archivo key.json
+          cat key.json # Imprime el contenido del archivo key.json (opcional)
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
           rm key.json
