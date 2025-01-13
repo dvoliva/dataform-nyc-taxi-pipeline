@@ -1,7 +1,8 @@
 
 config {
   type: "assertion",
-  name: "test_positive_total_amount"
+  name: "test_positive_total_amount",
+  tags: ["test"]
 }
 
 /*

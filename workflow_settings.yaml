@@ -3,6 +3,3 @@ defaultLocation: US
 defaultDataset: nyc_taxi_dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
-vars:
-  ENVIRONMENT: staging
-  SCHEMA: staging_dataset 
