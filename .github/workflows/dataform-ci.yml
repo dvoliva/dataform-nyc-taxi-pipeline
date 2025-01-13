@@ -27,7 +27,7 @@ jobs:
       # Paso 4: Autenticar con GCP
       - name: Authenticate with GCP
         run: |
-          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | sed 's/\\n/\n/g' > key.json
+          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | tr -d '\r' | tr '\\n' '\n' > key.json
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
         env:
