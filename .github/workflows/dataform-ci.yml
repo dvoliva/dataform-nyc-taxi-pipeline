@@ -27,11 +27,11 @@ jobs:
       # Paso 4: Autenticar con GCP
       - name: Authenticate with GCP
         run: |
-          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" > key.json
+          echo '${{ secrets.GCP_DF_SERVICE_KEY }}' > key.json
           gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
         env:
-          GCP_DF_SERVICE_KEY: "${{ secrets.GCP_DF_SERVICE_KEY }}"
+          GCP_DF_SERVICE_KEY: '${{ secrets.GCP_DF_SERVICE_KEY }}'
 
       # Paso 5: Ejecutar pipeline en staging
       - name: Run Dataform in Staging
