@@ -1,5 +1,5 @@
 config {
-  type: "table",
+  type: "view",
   name: "stg_nyc_taxi"
 }
 
