@@ -1,6 +1,6 @@
 config {
-  type: "view",
-  schema: "nyc_taxi_dataform",
+  type: "table",
+  schema: "prod_dataset",
   name: "an_nyc_taxi",
   tags: ["prod-only"]
 }
