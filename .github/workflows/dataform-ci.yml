@@ -46,7 +46,7 @@ jobs:
       - name: Run Dataform in Production
         if: success()
         run: |
-          dataform run --vars ENVIRONMENT=prod --tags prod-only
+          dataform run --vars ENVIRONMENT=prod, --tags prod-only
 
 
 
