@@ -41,14 +41,6 @@ jobs:
       # Paso 5: Ejecutar pipeline en staging
       - name: Run Dataform in Staging
         run: |
-          dataform run --vars "{"ENVIRONMENT": "staging"}"
-
-      - name: Run Dataform in Production
-        if: success()
-        run: |
-      # Paso 5: Ejecutar pipeline en staging
-      - name: Run Dataform in Staging
-        run: |
           dataform run --vars "{\"ENVIRONMENT\": \"staging\"}"
 
       - name: Run Dataform in Production
