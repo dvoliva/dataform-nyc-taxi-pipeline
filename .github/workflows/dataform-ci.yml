@@ -1,0 +1,59 @@
+name: Dataform CI/CD Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+    # Se activa cuando se crea un Pull Request hacia la rama main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # Paso 1: Descargar el repositorio
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar Node.js para instalar Dataform CLI
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # Paso 3: Instalar la CLI de Dataform
+      - name: Install Dataform CLI
+        run: npm install -g @dataform/cli
+
+      # Paso 4: Autenticar con GCP
+      - name: Authenticate with GCP
+        run: |
+          echo '${{ secrets.GCP_DF_SERVICE_KEY }}' > key.json
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud config set project proj-nyc-taxi-pipeline
+        env:
+          GCP_DF_SERVICE_KEY: '${{ secrets.GCP_DF_SERVICE_KEY }}'
+
+      # Paso 4.1: Autenticar con DF
+      - name: Create Dataform credentials file
+        run: |
+          echo '${{ secrets.DATAFORM_CREDENTIALS }}' > .df-credentials.json
+
+      # Paso 5: Ejecutar pipeline en staging
+      - name: Run Dataform in Staging
+        run: |
+          ENVIRONMENT=staging dataform run
+
+      # Paso 6: Ejecutar pipeline en producción
+      - name: Run Dataform in Production
+        if: success()
+        run: |
+          ENVIRONMENT=prod dataform run
+
+      - name: Clean Up Staging Table
+        if: success()  # Solo se ejecuta si la producción fue exitosa
+        run: |
+          bq rm -f -t proj-nyc-taxi-pipeline:nyc_taxi_dataform.stg_nyc_taxi
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: key.json
+
+
