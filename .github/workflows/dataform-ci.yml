@@ -41,20 +41,21 @@ jobs:
       # Paso 5: Ejecutar pipeline en staging
       - name: Run Dataform in Staging
         run: |
-          dataform run --vars '{"ENVIRONMENT": "staging"}'
+          dataform run --vars "{"ENVIRONMENT": "staging"}"
 
       - name: Run Dataform in Production
         if: success()
         run: |
-          dataform run --vars '{"ENVIRONMENT": "prod"}'
-
-
-      # Paso 7: Eliminar tabla staging
-      - name: Clean Up Staging Table
-        if: success()  
+      # Paso 5: Ejecutar pipeline en staging
+      - name: Run Dataform in Staging
         run: |
-          bq rm -f -t proj-nyc-taxi-pipeline:nyc_taxi_dataform.stg_nyc_taxi
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: key.json
+          dataform run --vars "{\"ENVIRONMENT\": \"staging\"}"
+
+      - name: Run Dataform in Production
+        if: success()
+        run: |
+          dataform run --vars "{\"ENVIRONMENT\": \"prod\"}"
+
+
 
 

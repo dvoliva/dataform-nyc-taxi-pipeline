@@ -8,7 +8,7 @@ js {
   const { START_DATE, END_DATE } = require("../../includes/variables.js");
 
   // Usa dataform.projectConfig.vars para acceder a ENVIRONMENT
-  const env = dataform.projectConfig.vars.ENVIRONMENT || "staging";
+  const env = dataform.projectConfig.vars?.ENVIRONMENT || "staging";
   let sourceTable = "";
 
   switch (env) {
