@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: "nyc_taxi_dataform",
+  schema: "prod_dataset",
   name: "an_nyc_taxi",
   tags: ["prod-only"]
 }
@@ -9,4 +9,4 @@ config {
 SELECT
   *
 FROM
-  `${dataform.projectConfig.vars.SCHEMA}.stg_nyc_taxi`
+  ${ref("stg_nyc_taxi")}
