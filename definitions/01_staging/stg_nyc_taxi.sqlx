@@ -46,3 +46,4 @@ WHERE
   pickup_datetime >= '${dataform.START_DATE}'
   AND pickup_datetime < '${dataform.END_DATE}'
   AND total_amount >= 0
+
