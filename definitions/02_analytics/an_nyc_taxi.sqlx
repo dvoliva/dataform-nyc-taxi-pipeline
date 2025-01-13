@@ -9,4 +9,4 @@ config {
 SELECT
   *
 FROM
-  ${ref("stg_nyc_taxi")}
+  `${dataform.projectConfig.vars.SCHEMA}.stg_nyc_taxi`
