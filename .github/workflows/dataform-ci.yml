@@ -24,16 +24,18 @@ jobs:
       - name: Install Dataform CLI
         run: npm install -g @dataform/cli
 
-      # Paso 4: Crear el archivo .df-credentials.json
-      - name: Create Dataform credentials file
-        run: |
-          echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > .df-credentials.json
-
-      # Paso 5: Autenticar con GCP (opcional si usas gcloud)
+      # Paso 4: Autenticar con GCP
       - name: Authenticate with GCP
         run: |
-          gcloud auth activate-service-account --key-file=.df-credentials.json
+          echo '${{ secrets.GCP_DF_SERVICE_KEY }}' > key.json
+          gcloud auth activate-service-account --key-file=key.json
           gcloud config set project proj-nyc-taxi-pipeline
+        env:
+          GCP_DF_SERVICE_KEY: '${{ secrets.GCP_DF_SERVICE_KEY }}'
+
+      - name: Create Dataform credentials file
+        run: |
+          echo '${{ secrets.DATAFORM_CREDENTIALS }}' > .df-credentials.json
 
       # Paso 5: Ejecutar pipeline en staging
       - name: Run Dataform in Staging
