@@ -7,15 +7,19 @@ config {
 js {
   const { START_DATE, END_DATE } = require("../../includes/variables.js");
 
-
-  const env = dataform.projectConfig.ENVIRONMENT;
+  const env = dataform.projectConfig.ENVIRONMENT || "staging";
   let sourceTable = "";
 
-  if (env === "prod") {
-    sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
-  } else {
-    sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
-  }
+  switch (env) {
+   case "prod":
+     sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
+     break;
+   case "staging":
+     sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
+     break;
+   default:
+     throw new Error(`Unknown environment: ${env}`);
+}
 
   dataform.SOURCE_TABLE = sourceTable;
   dataform.START_DATE = START_DATE;
