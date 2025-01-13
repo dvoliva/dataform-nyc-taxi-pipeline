@@ -33,6 +33,7 @@ jobs:
         env:
           GCP_DF_SERVICE_KEY: '${{ secrets.GCP_DF_SERVICE_KEY }}'
 
+      # Paso 4.1: Autenticar con DF
       - name: Create Dataform credentials file
         run: |
           echo '${{ secrets.DATAFORM_CREDENTIALS }}' > .df-credentials.json
