@@ -24,6 +24,24 @@ jobs:
       - name: Install Dataform CLI
         run: npm install -g @dataform/cli
 
+
+
+
+      - name: Authenticate with GCP
+        run: |
+          echo "${{ secrets.GCP_DF_SERVICE_KEY }}" | sed 's/\\n/\n/g' > key.json
+          cat key.json # Imprime el contenido del archivo key.json
+          gcloud auth activate-service-account --key-file=key.json
+          gcloud config set project proj-nyc-taxi-pipeline
+          rm key.json
+
+
+
+
+
+
+
+
       # Paso 4: Autenticar con GCP
       - name: Authenticate with GCP
         run: |
