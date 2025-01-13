@@ -1,49 +1,53 @@
 config {
-  type: "table",
-  schema: "staging_dataset",
-  name: "stg_nyc_taxi"
+    type: "table",
+    schema: "staging_dataset",
+    name: "stg_nyc_taxi"
 }
 
 js {
-  const { START_DATE, END_DATE } = require("../../includes/variables.js");
+    const {
+        START_DATE,
+        END_DATE
+    } = require("../../includes/variables.js");
 
-  // Usa dataform.projectConfig.vars para acceder a ENVIRONMENT
-  const env = dataform.projectConfig.vars.ENVIRONMENT || "staging";
-  let sourceTable = "";
+    const env = dataform.projectConfig.vars.ENVIRONMENT || "staging";
+    let sourceTable = "";
 
-  switch (env) {
-    case "prod":
-      sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
-      break;
-    case "staging":
-      sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
-      break;
-    default:
-      throw new Error(`Unknown environment: ${env}`);
-  }
+    switch (env) {
+        case "prod":
+            sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2017";
+            break;
+        case "staging":
+            sourceTable = "bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016";
+            break;
+        default:
+            throw new Error(`Unknown environment: ${env}`);
+    }
 
-  dataform.SOURCE_TABLE = sourceTable;
-  dataform.START_DATE = START_DATE;
-  dataform.END_DATE = END_DATE;
+    dataform.SOURCE_TABLE = sourceTable;
+    dataform.START_DATE = START_DATE;
+    dataform.END_DATE = END_DATE;
 }
 
 SELECT
   data_file_year,
   vendor_id,
-  EXTRACT(HOUR FROM pickup_datetime) as pickup_hour,
+  EXTRACT(HOUR
+  FROM
+    pickup_datetime) AS pickup_hour,
   passenger_count,
   trip_distance,
   payment_type,
   total_amount,
   -- Calculamos el costo promedio por milla
-  CASE 
-    WHEN trip_distance > 0 THEN total_amount / trip_distance 
-    ELSE 0 
-  END as cost_per_mile
+  CASE
+    WHEN trip_distance > 0 THEN total_amount / trip_distance
+    ELSE 0
+END
+  AS cost_per_mile
 FROM
   `${dataform.SOURCE_TABLE}`
 WHERE
   pickup_datetime >= '${dataform.START_DATE}'
   AND pickup_datetime < '${dataform.END_DATE}'
   AND total_amount >= 0
-

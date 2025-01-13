@@ -1,5 +1,5 @@
 config {
-  type: "view",
+  type: "table",
   schema: "nyc_taxi_dataform",
   name: "an_nyc_taxi",
   tags: ["prod-only"]
