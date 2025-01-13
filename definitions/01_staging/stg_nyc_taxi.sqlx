@@ -1,7 +1,8 @@
 config {
     type: "table",
     schema: "staging_dataset",
-    name: "stg_nyc_taxi"
+    name: "stg_nyc_taxi",
+    tags: ["staging"]
 }
 
 js {
