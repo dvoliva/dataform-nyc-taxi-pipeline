@@ -42,12 +42,16 @@ jobs:
       - name: Run Dataform in Staging
         run: |
           ENVIRONMENT=staging dataform run
+        env:
+          ENVIRONMENT: staging
 
       # Paso 6: Ejecutar pipeline en producción
       - name: Run Dataform in Production
         if: success()
         run: |
           ENVIRONMENT=prod dataform run
+        env:
+          ENVIRONMENT: prod
 
       # Paso 7: Eliminar tabla staging
       - name: Clean Up Staging Table
