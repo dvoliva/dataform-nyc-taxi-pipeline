@@ -1,7 +1,18 @@
+# Proyecto ELT con Dataform en GCP - NYC Taxi Datapipeline
 
-# Proyecto ELT con Dataform en GCP - NYC Taxi Data
+Este proyecto tiene como objetivo implementar un pipeline ELT (Extract, Load, Transform) utilizando Dataform en Google Cloud Platform (GCP). El proyecto utiliza el conjunto de datos público de taxis de Nueva York y se centra principalmente en la infraestructura del pipeline, con un enfoque en la demostración del uso de pruebas para asegurar la calidad de los datos y el establecimiento de un flujo de trabajo CI/CD con GitHub Actions.
 
-Este proyecto tiene como objetivo implementar un pipeline ELT (Extract, Load, Transform) utilizando Dataform en Google Cloud Platform (GCP). El proyecto utiliza el conjunto de datos público de taxis de Nueva York y se centra principalmente en la infraestructura del pipeline y el establecimiento de un flujo de trabajo CI/CD con GitHub Actions.
+## Introducción a Dataform
+
+Dataform es una herramienta de orquestación de datos que permite construir y gestionar pipelines de datos en plataformas de Big Data como Google Cloud Platform (GCP). En Dataform, los conceptos de repositorios y ramas se manejan de manera similar a GitHub, pero en lugar de ramas, se utilizan "workspaces". Un workspace es un entorno de desarrollo aislado que permite trabajar con diferentes versiones de un pipeline sin interferir con otros.
+
+### Conexión con GitHub
+
+Dataform se conecta con GitHub para gestionar versiones de los pipelines. La integración permite que los cambios en el repositorio de GitHub desencadenen la ejecución de los pipelines en Dataform, lo que facilita la automatización mediante CI/CD.
+
+### Uso de Secretos y Variables
+
+Los secretos (como claves de API o credenciales) y las variables (como fechas o entornos) se gestionan de forma segura en Dataform. Los secretos se almacenan en GitHub como variables de entorno en los flujos de trabajo, mientras que las variables de Dataform pueden ser definidas en archivos de configuración para su uso en los pipelines.
 
 ## Estructura del Proyecto
 
@@ -15,7 +26,7 @@ El proyecto está organizado en varios archivos y carpetas que definen las trans
 
 3. **`definitions/02_analytics/an_nyc_taxi.sqlx`**: Define la tabla de análisis que toma los datos de "staging" y los carga para ser utilizados en análisis posteriores. Esta tabla no realiza transformaciones adicionales, solo carga los datos.
 
-4. **`definitions/tests/data_quality_test.sqlx`**: Contiene un test de calidad de datos, en particular, para verificar que no haya registros con valores negativos en la columna `total_amount`. Este es un ejemplo básico de prueba para demostrar como se asegura la integridad de los datos.
+4. **`definitions/tests/data_quality_test.sqlx`**: Contiene un test de calidad de datos, en particular, para verificar que no haya registros con valores negativos en la columna `total_amount`. Este es un ejemplo básico de prueba para asegurar la integridad de los datos.
 
 5. **`includes/variables.js`**: Define las variables utilizadas en el proyecto, como las fechas de inicio y fin para los datos, que pueden cambiar dependiendo del entorno (producción o staging).
 
@@ -67,40 +78,6 @@ El test de calidad de los datos es una parte crucial de este proyecto. El archiv
 
 Este test es solo un ejemplo y puede ser extendido para incluir otras validaciones de calidad de los datos según las necesidades del proyecto.
 
-## ¿Cómo Ejecutar el Proyecto?
-
-1. **Clonar el repositorio**:
-
-   ```bash
-   git clone <repositorio>
-   cd <repositorio>
-   ```
-
-2. **Instalar las dependencias**:
-
-   Asegúrate de tener Node.js instalado. Luego, instala las dependencias del proyecto:
-
-   ```bash
-   npm install
-   ```
-
-3. **Configurar el entorno**:
-
-   Configura las variables de entorno necesarias en el archivo `variables.js`, dependiendo de si estás trabajando en un entorno de producción o staging.
-
-4. **Ejecutar Dataform**:
-
-   Una vez que todo esté configurado, puedes ejecutar las transformaciones de Dataform localmente:
-
-   ```bash
-   dataform run --vars ENVIRONMENT=staging --tags staging,test
-   ```
-
-   Esto ejecutará las transformaciones en el entorno de staging. Puedes también ejecutar en producción de forma similar.
-
-5. **Crear un Pull Request**:
-
-   Cuando estés listo para implementar los cambios, crea un Pull Request hacia la rama `main` y el flujo de trabajo CI/CD se encargará de ejecutar las pruebas y las transformaciones automáticamente.
-
 ## Conclusión
-Esta primera versión del proyecto de implementación de un pipeline ELT en GCP utilizando Dataform prioriza la infraestructura del proyecto, la automatización del flujo de trabajo y demostrar el uso de las pruebas de calidad de los datos (ventaja de SQLX). 
+
+Esta primera versión del proyecto de implementación de un datapipeline ELT en GCP utilizando Dataform. Se ha dado prioridad a la infraestructura del proyecto, la automatización del flujo de trabajo y la demostración del cómo hacer pruebas de calidad de los datos.
