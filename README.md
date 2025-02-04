@@ -74,9 +74,7 @@ El flujo de trabajo CI/CD asegura que las transformaciones de datos se ejecuten 
 
 ## Pruebas de Calidad de los Datos
 
-El test de calidad de los datos es una parte crucial de este proyecto. El archivo `data_quality_test.sqlx` contiene un test sencillo que asegura que no haya registros con valores negativos en la columna `total_amount`. Si se encuentran registros con valores negativos, el test fallará y el pipeline se detendrá.
-
-Este test es solo un ejemplo y puede ser extendido para incluir otras validaciones de calidad de los datos según las necesidades del proyecto.
+En Dataform, es posible realizar pruebas de calidad de los datos utilizando consultas SQL (sqlx). Estas pruebas se configuran como afirmaciones, donde se define una consulta que valida las condiciones de los datos. La lógica básica de un test en sqlx es que la consulta debe devolver filas si la calidad de los datos no cumple con los requisitos establecidos. Si la consulta no devuelve filas, significa que los datos son válidos y el test pasa. Si devuelve alguna fila, el test falla, lo que indica que hay datos inconsistentes o erróneos. Este enfoque permite realizar validaciones simples y complejas, como verificar rangos de valores, la ausencia de registros nulos, la duplicidad de datos, y otras reglas de calidad personalizadas.
 
 ## Conclusión
 
